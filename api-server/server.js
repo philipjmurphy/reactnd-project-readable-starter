@@ -11,8 +11,8 @@ const comments = require('./comments')
 const app = express()
 
 app.use(express.static('public'))
-app.use(cors())
-
+// app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.get('/', (req, res) => {
   const help = `
@@ -193,7 +193,10 @@ app.get('/posts/:id', (req, res) => {
 
 app.delete('/posts/:id', (req, res) => {
     posts.disable(req.token, req.params.id)
-      .then(post => comments.disableByParent(req.token, post))
+      .then(
+          (post) => {
+              comments.disableByParent(req.token, post)
+          })
       .then(
           (data) => res.send(data),
           (error) => {
