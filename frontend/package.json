@@ -3,15 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.0",
+    "flexbox-react": "^4.4.0",
+    "lodash": "^4.17.4",
+    "material-design-icons": "^3.0.1",
+    "material-ui": "^1.0.0-beta.20",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "moment": "^2.18.1",
+    "prop-types": "^15.6.0",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-moment": "^0.6.5",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.13",
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.1",
+    "redux-form-material-ui": "^5.0.0-beta.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "typeface-roboto": "^0.0.43",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "react-scripts": "1.0.13"
+    "node-sass-chokidar": "^0.0.3",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

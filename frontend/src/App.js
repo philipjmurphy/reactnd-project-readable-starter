@@ -1,43 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      backend: 'backend-data'
-    }
+import CategoriesPosts from './components/CategoriesPosts'
+import CategoryPosts from './components/CategoryPosts'
+import PostCreate from './components/post/PostCreate'
+import PostUpdate from './components/post/PostUpdate'
+import PostDetail from './components/post/PostDetail'
+
+import Header from './components/Header'
+
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import blue from 'material-ui/colors/blue'
+import green from 'material-ui/colors/green'
+import { withTheme, withStyles } from 'material-ui/styles'
+
+import 'typeface-roboto'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: green
   }
+})
 
-  componentDidMount() {
-    const url = `${process.env.REACT_APP_BACKEND}/categories`;
-    console.log('fetching from url', url);
-    fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: 'include' } )
-      .then( (res) => { return(res.text()) })
-      .then((data) => {
-        this.setState({backend:data});
-      });
+const styles = theme => ({
+  root: {
+    marginTop: 72 // Leave space for the AppBar.
   }
+})
 
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Talking to the backend yields these categories: <br/>
-          {this.state.backend}
-        </p>
+const App = ({classes}) => (
+  <MuiThemeProvider theme={theme} >
+    <BrowserRouter>
+      <div className={classes.root}>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={CategoriesPosts} />
+          <Route path="/post/create" component={PostCreate} />
+          <Route path="/post/update/:postId" component={PostUpdate} />
+          <Route path="/post/:postId" component={PostDetail} />
+          <Route path="/:category" component={CategoryPosts} />
+        </Switch>
       </div>
-    );
-  }
-}
+    </BrowserRouter>
+  </MuiThemeProvider>
+)
 
-export default App;
+export default withTheme()(withStyles(styles)(App))

@@ -193,10 +193,7 @@ app.get('/posts/:id', (req, res) => {
 
 app.delete('/posts/:id', (req, res) => {
     posts.disable(req.token, req.params.id)
-      .then(
-          (post) => {
-              comments.disableByParent(req.token, post)
-          })
+      .then(post => comments.disableByParent(req.token, post))
       .then(
           (data) => res.send(data),
           (error) => {
