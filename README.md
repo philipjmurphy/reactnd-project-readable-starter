@@ -4,18 +4,16 @@ This is the starter project for the final assessment project for Udacity's Redux
 
 This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
 
-## Start Developing
-
-To get started developing right away:
+## Install instructions
 
 * Install and start the API server
     - `cd api-server`
-    - `npm install`
+    - `npm install OR yarn install`
     - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
+* In another terminal window, to start the front-end
     - `cd frontend`
-    - `npm start`
+    - `npm install OR yarn install`
+    - `npm start OR yarn start`
 
 ## API Server
 

@@ -86,7 +86,7 @@ const Posts = ({posts, changeSortOrder, postChangeVote, isFetching, isLoading, e
         </Table>}
       </CardContent>
     </Card>
-    <Button disabled={isFetching} onClick={() => history.push('/post/create')} fab color="primary" aria-label="add" className={classes.addPost}>
+    <Button onClick={() => history.push('/post/create')} fab color="primary" aria-label="add" className={classes.addPost}>
       <AddIcon />
     </Button>
   </div>
