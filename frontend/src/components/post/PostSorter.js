@@ -27,7 +27,13 @@ const PostSorter = ({sortOrder, changeSortOrder, classes}) => (
         Title
       </TableCell>
       <TableCell>
+        Author
+      </TableCell>
+      <TableCell>
         {createTimeSortHandler(sortOrder, changeSortOrder)}
+      </TableCell>
+      <TableCell>
+        Action
       </TableCell>
     </TableRow>
   </TableHead>

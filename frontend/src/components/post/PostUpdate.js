@@ -6,6 +6,15 @@ import ErrorState from '../states/ErrorState'
 
 import { postDetailsGet, postUpdate } from '../../actions/posts'
 
+import Typography from 'material-ui/Typography'
+import { withStyles } from 'material-ui/styles'
+
+const styles = theme => ({
+  notFound: {
+    padding: 16
+  }
+})
+
 // No PropTypes Required
 
 class PostUpdate extends Component {
@@ -14,7 +23,11 @@ class PostUpdate extends Component {
   }
 
   render() {
-    const { post, postUpdate, error } = this.props
+    const { post, postUpdate, error, classes } = this.props
+
+    if(!post) {
+      return (<Typography className={classes.notFound} type="headline">This post does not exist.</Typography>)
+    }
 
     return (
       <div>
@@ -30,9 +43,9 @@ const mapStateToProps = ({posts}, {match}) => ({
   error: posts.error
 })
 
-const mapDispatchToProps = (dispatch, {history, match}) => ({
-  postUpdate: () => dispatch(postUpdate(history)),
+const mapDispatchToProps = (dispatch, {match}) => ({
+  postUpdate: () => dispatch(postUpdate()),
   postDetailsGet: () => dispatch(postDetailsGet(match.params.postId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostUpdate)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostUpdate))

@@ -43,6 +43,9 @@ const styles = theme => ({
   divider: {
     margin: '8px 0',
     color: grey[500]
+  },
+  notFound: {
+    padding: 16
   }
 })
 
@@ -57,7 +60,9 @@ class PostDetail extends Component {
   render() {
     const {post, postChangeVote, postDelete, isLoading, error, classes} = this.props
 
-    if(!post) return null
+    if(!post) {
+      return (<Typography className={classes.notFound} type="headline">This post does not exist.</Typography>)
+    }
 
     return (
       <Card className={classes.card}>

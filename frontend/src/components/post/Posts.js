@@ -9,7 +9,7 @@ import PostSorter, { postsSort } from './PostSorter'
 import Voter from '../vote/Voter'
 import Loader from '../states/Loader'
 
-import { changeSortOrder, postChangeVote } from '../../actions/posts'
+import { postChangeVote, postDelete } from '../../actions/posts'
 
 import { withStyles } from 'material-ui/styles'
 import Card, { CardContent } from 'material-ui/Card'
@@ -41,8 +41,14 @@ const styles = theme => ({
       color: grey[500]
     }
   },
+  author: {
+    fontStyle: 'italic'
+  },
   time: {
     color: grey[700]
+  },
+  edit: {
+    marginRight: 8
   },
   commentCount: {
     color: grey[500]
@@ -57,7 +63,7 @@ const styles = theme => ({
 
 // No PropTypes Required
 
-const Posts = ({posts, changeSortOrder, postChangeVote, isFetching, isLoading, error, classes, history}) => (
+const Posts = ({posts, postChangeVote, postDelete, isFetching, isLoading, error, classes, history}) => (
   <div>
     <Card className={classes.card}>
       <CardContent>
@@ -75,10 +81,17 @@ const Posts = ({posts, changeSortOrder, postChangeVote, isFetching, isLoading, e
                   <div className={classes.commentCount}> {post.commentCount} {post.commentCount === 1 ? 'Comment' : 'Comments'}</div>
                 </TableCell>
                 <TableCell className={classes.title}>
-                  <Link className={classes.titleLink} to={'/post/' + post.id}>{post.title}</Link>
+                  <Link className={classes.titleLink} to={post.category + '/' + post.id}>{post.title}</Link>
+                </TableCell>
+                <TableCell className={classes.author}>
+                  {post.author}
                 </TableCell>
                 <TableCell>
                   <Moment className={classes.time} fromNow>{post.timestamp}</Moment>
+                </TableCell>
+                <TableCell>
+                    <Link className={classes.edit} disabled={isLoading} to={'/post/update/' + post.id}>Edit</Link>
+                    <button disabled={isLoading} onClick={() => postDelete(post)}>Delete</button>
                 </TableCell>
               </TableRow>
             )}
@@ -93,10 +106,15 @@ const Posts = ({posts, changeSortOrder, postChangeVote, isFetching, isLoading, e
 )
 
 const mapStateToProps = ({posts}) => ({
-  posts: postsSort(_.map(posts.byId), posts.sortOrder),
+  posts: postsSort(_.filter(_.map(posts.byId), ['deleted', false]), posts.sortOrder),
   isFetching: posts.isFetching,
   isLoading: posts.isLoading,
   error: posts.error
 })
 
-export default withRouter(connect(mapStateToProps, {changeSortOrder, postChangeVote})(withStyles(styles)(Posts)))
+const mapDispatchToProps = (dispatch, {history}) => ({
+  postDelete: (post) => dispatch(postDelete(post, history)),
+  postChangeVote: (post, option) => dispatch(postChangeVote(post, option))
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Posts)))
