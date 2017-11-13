@@ -20,8 +20,4 @@ const mapStateToProps = ({posts}) => ({
   error: posts.error
 })
 
-const mapDispatchToProps = (dispatch, {history}) => ({
-  postCreate: () => dispatch(postCreate(history))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreate)
+export default connect(mapStateToProps, {postCreate})(PostCreate)

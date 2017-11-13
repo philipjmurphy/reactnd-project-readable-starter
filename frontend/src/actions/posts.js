@@ -89,7 +89,7 @@ export const postUpdateEnd = () => ({
 
 // POST CREATE
 //////////////
-export const postCreate = (history) => (dispatch, getState) => {
+export const postCreate = () => (dispatch, getState) => {
   dispatch({
     type: PostActionTypes.POST_CREATE_REQUEST
   })
@@ -112,7 +112,7 @@ export const postCreate = (history) => (dispatch, getState) => {
     error => dispatch({
       type: PostActionTypes.POST_CREATE_FAILURE,
       error
-    })).then(action => history.push('/post/' + action.post.id))
+    })).then(action => window.history.back())
 }
 
 // POST DELETE
