@@ -38,7 +38,7 @@ const App = ({classes}) => (
           <Route exact path="/" component={CategoriesPosts} />
           <Route path="/post/create" component={PostCreate} />
           <Route path="/post/update/:postId" component={PostUpdate} />
-          <Route path="/post/:postId" component={PostDetail} />
+          <Route path="/:category/:postId" component={PostDetail} />
           <Route path="/:category" component={CategoryPosts} />
         </Switch>
       </div>

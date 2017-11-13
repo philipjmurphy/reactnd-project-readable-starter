@@ -60,7 +60,7 @@ export const postUpdateStart = () => ({
   type: PostActionTypes.POST_UPDATE_START
 })
 
-export const postUpdate = (history) => (dispatch, getState) => {
+export const postUpdate = () => (dispatch, getState) => {
   dispatch({
     type: PostActionTypes.POST_UPDATE_REQUEST
   })
@@ -80,7 +80,7 @@ export const postUpdate = (history) => (dispatch, getState) => {
       error
     }))
     .then(() => dispatch(postUpdateEnd()))
-    .then(() => history.push('/post/' + post.id))
+    .then(() => window.history.back())
 }
 
 export const postUpdateEnd = () => ({
